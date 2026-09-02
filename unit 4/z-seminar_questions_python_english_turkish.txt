@@ -1,0 +1,520 @@
+SEMINAR QUESTIONS – OBJECT-ORIENTED PROGRAMMING WITH PYTHON
+SEMINER SORULARI – PYTHON İLE NESNE YÖNELİMLİ PROGRAMLAMA
+
+============================================================
+1. HOW DO ACCESS MODIFIERS CONTRIBUTE TO ENCAPSULATION IN OOP?
+   ACCESS MODIFIERS, OOP'DE ENCAPSULATION'A NASIL KATKI SAĞLAR?
+============================================================
+
+ENGLISH EXPLANATION
+-------------------
+Encapsulation is one of the main principles of Object-Oriented Programming (OOP).
+It means hiding the internal data of an object and controlling how that data can
+be accessed or modified.
+
+In languages such as Java and C++, access modifiers like public, protected, and
+private are used directly. Python does not have strict access modifiers in the
+same way. Instead, Python uses naming conventions.
+
+In Python:
+
+1. public
+   A normal variable or method name is considered public.
+   It can be accessed from inside and outside the class.
+
+2. protected-like
+   A name beginning with one underscore, such as _balance, means:
+   "This is intended for internal use."
+   It can still be accessed from outside the class, but programmers are expected
+   not to use it directly unless necessary.
+
+3. private-like
+   A name beginning with two underscores, such as __balance, activates
+   name mangling. This makes direct external access more difficult.
+
+Example:
+
+class BankAccount:
+    def __init__(self, balance):
+        self.__balance = balance
+
+    def deposit(self, amount):
+        if amount > 0:
+            self.__balance += amount
+
+    def get_balance(self):
+        return self.__balance
+
+account = BankAccount(1000)
+account.deposit(500)
+print(account.get_balance())
+
+Output:
+1500
+
+In this example, __balance is hidden from normal direct access. The user of the
+class changes the balance through methods such as deposit().
+
+This improves:
+- Data protection
+- Maintainability
+- Reliability
+- Modularity
+- Control over how data is changed
+
+In short, encapsulation protects the internal state of an object and exposes
+only the operations that should be used.
+
+TÜRKÇE AÇIKLAMA
+---------------
+Encapsulation (kapsülleme), Nesne Yönelimli Programlamanın temel prensiplerinden
+biridir. Bir nesnenin iç verilerinin gizlenmesi ve bu verilere nasıl erişileceğinin
+veya nasıl değiştirileceğinin kontrol edilmesi anlamına gelir.
+
+Java ve C++ gibi dillerde public, protected ve private gibi access modifier'lar
+doğrudan kullanılır. Python'da ise aynı şekilde katı erişim belirleyicileri yoktur.
+Bunun yerine isimlendirme kuralları kullanılır.
+
+Python'da:
+
+1. public
+   Normal şekilde yazılan değişken ve metotlar public kabul edilir.
+   Sınıfın içinden ve dışından erişilebilir.
+
+2. protected-benzeri
+   Başında tek alt çizgi bulunan isimler, örneğin _balance, bunun daha çok
+   sınıfın iç kullanımı için olduğunu belirtir.
+   Dışarıdan erişim teknik olarak mümkündür ama doğrudan kullanılması önerilmez.
+
+3. private-benzeri
+   Başında iki alt çizgi bulunan isimler, örneğin __balance, name mangling
+   mekanizmasını kullanır. Bu, dışarıdan doğrudan erişimi zorlaştırır.
+
+Örnek:
+
+class BankAccount:
+    def __init__(self, balance):
+        self.__balance = balance
+
+    def deposit(self, amount):
+        if amount > 0:
+            self.__balance += amount
+
+    def get_balance(self):
+        return self.__balance
+
+account = BankAccount(1000)
+account.deposit(500)
+print(account.get_balance())
+
+Çıktı:
+1500
+
+Bu örnekte __balance doğrudan kullanılmak yerine deposit() ve get_balance()
+metotları üzerinden kontrol edilir.
+
+Bunun faydaları:
+- Veriyi korur
+- Hatalı değişiklikleri önlemeye yardımcı olur
+- Bakımı kolaylaştırır
+- Programı daha güvenilir yapar
+- Sınıflar arasında daha düzenli bir yapı oluşturur
+
+Kısaca encapsulation, nesnenin iç durumunu korur ve dışarıya yalnızca gerekli
+işlemleri sunar.
+
+
+============================================================
+2. WHAT IS THE DIFFERENCE BETWEEN ABSTRACT DATA TYPES AND INTERFACES?
+   ABSTRACT DATA TYPE VE INTERFACE ARASINDAKİ FARK NEDİR?
+============================================================
+
+ENGLISH EXPLANATION
+-------------------
+An Abstract Data Type (ADT) describes what a data structure should do, without
+focusing on exactly how it is implemented.
+
+Common examples of ADTs are:
+- Stack
+- Queue
+- List
+- Set
+- Map
+
+For example, a Stack ADT usually supports operations such as:
+
+push()
+pop()
+peek()
+is_empty()
+
+A stack follows the LIFO principle:
+
+LIFO = Last In, First Out
+
+This means the last item added to the stack is the first item removed.
+
+Python example:
+
+class Stack:
+    def __init__(self):
+        self.items = []
+
+    def push(self, item):
+        self.items.append(item)
+
+    def pop(self):
+        return self.items.pop()
+
+    def peek(self):
+        return self.items[-1]
+
+    def is_empty(self):
+        return len(self.items) == 0
+
+The important point is that the ADT describes the behavior. The internal
+implementation could use a Python list, linked list, or another structure.
+
+An interface, on the other hand, defines a contract that classes must follow.
+
+Python does not have an interface keyword like Java. However, abstract base
+classes can be used to create interface-like behavior.
+
+Example:
+
+from abc import ABC, abstractmethod
+
+class Shape(ABC):
+
+    @abstractmethod
+    def area(self):
+        pass
+
+class Rectangle(Shape):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def area(self):
+        return self.width * self.height
+
+Here, Shape defines a common rule: every concrete Shape class should provide
+an area() method.
+
+When should they be used?
+
+Use an ADT when:
+- You want to describe the behavior of a data structure
+- You want to separate the logical behavior from implementation details
+- You are designing structures such as Stack, Queue, or Set
+
+Use an interface or abstract class when:
+- Different classes should follow the same contract
+- You want multiple implementations of the same general behavior
+- You want more flexible and loosely coupled software
+
+Main difference:
+
+ADT:
+Focuses on what operations a data type provides.
+
+Interface:
+Focuses on what methods implementing classes must provide.
+
+
+TÜRKÇE AÇIKLAMA
+---------------
+Abstract Data Type (ADT), bir veri yapısının ne yapması gerektiğini tanımlar;
+nasıl gerçekleştirildiğinin ayrıntılarına odaklanmaz.
+
+Yaygın ADT örnekleri:
+- Stack
+- Queue
+- List
+- Set
+- Map
+
+Örneğin Stack ADT şu işlemleri destekler:
+
+push()
+pop()
+peek()
+is_empty()
+
+Stack, LIFO prensibine göre çalışır:
+
+LIFO = Last In, First Out
+Son Giren, İlk Çıkar
+
+Yani en son eklenen eleman ilk çıkarılır.
+
+Python örneği:
+
+class Stack:
+    def __init__(self):
+        self.items = []
+
+    def push(self, item):
+        self.items.append(item)
+
+    def pop(self):
+        return self.items.pop()
+
+    def peek(self):
+        return self.items[-1]
+
+    def is_empty(self):
+        return len(self.items) == 0
+
+Buradaki önemli nokta, ADT'nin davranışı tanımlamasıdır.
+İçeride Python listesi, linked list veya başka bir yapı kullanılabilir.
+
+Interface ise sınıfların uyması gereken ortak bir sözleşme veya kural tanımlar.
+
+Python'da Java'daki gibi interface anahtar kelimesi yoktur. Bunun yerine abstract
+base class kullanılabilir.
+
+Örnek:
+
+from abc import ABC, abstractmethod
+
+class Shape(ABC):
+
+    @abstractmethod
+    def area(self):
+        pass
+
+class Rectangle(Shape):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def area(self):
+        return self.width * self.height
+
+Burada Shape sınıfı ortak bir kural belirler:
+Shape'ten türeyen somut sınıflar area() metodunu uygulamalıdır.
+
+Ne zaman kullanılmalıdır?
+
+ADT kullan:
+- Veri yapısının davranışını tanımlamak istiyorsan
+- Mantıksal yapı ile uygulama detaylarını ayırmak istiyorsan
+- Stack, Queue, Set gibi veri yapıları tasarlıyorsan
+
+Interface veya abstract class kullan:
+- Birden fazla sınıfın aynı kurala uymasını istiyorsan
+- Aynı davranışın farklı uygulamalarını oluşturmak istiyorsan
+- Esnek ve bağımlılığı düşük bir yazılım tasarlamak istiyorsan
+
+Temel fark:
+
+ADT:
+Bir veri tipinin hangi işlemleri sağladığına odaklanır.
+
+Interface:
+Bir sınıfın hangi metotları uygulamak zorunda olduğuna odaklanır.
+
+
+============================================================
+3. HOW DOES ABSTRACTION IMPROVE FLEXIBILITY AND SCALABILITY?
+   ABSTRACTION ESNEKLİK VE ÖLÇEKLENEBİLİRLİĞİ NASIL GELİŞTİRİR?
+============================================================
+
+ENGLISH EXPLANATION
+-------------------
+Abstraction means hiding unnecessary implementation details and showing only
+the important features of a system.
+
+For example, when a user calls:
+
+car.start()
+
+the user does not need to know every internal operation required to start the
+car. The complexity is hidden behind a simple method.
+
+The same idea is used in software design.
+
+Example:
+
+from abc import ABC, abstractmethod
+
+class Database(ABC):
+
+    @abstractmethod
+    def save(self, data):
+        pass
+
+class MySQLDatabase(Database):
+    def save(self, data):
+        print("Saving to MySQL:", data)
+
+class PostgreSQLDatabase(Database):
+    def save(self, data):
+        print("Saving to PostgreSQL:", data)
+
+def save_user(database, user):
+    database.save(user)
+
+mysql = MySQLDatabase()
+save_user(mysql, "Ahmet")
+
+postgres = PostgreSQLDatabase()
+save_user(postgres, "Ahmet")
+
+The save_user() function does not need to know whether the actual database is
+MySQL or PostgreSQL. It only depends on the general Database abstraction.
+
+This improves flexibility because one implementation can be replaced by another
+with minimal changes.
+
+It improves scalability because new implementations can be added later.
+
+For example:
+
+class MongoDatabase(Database):
+    def save(self, data):
+        print("Saving to MongoDB:", data)
+
+The rest of the application may continue working without major redesign.
+
+Advantages of abstraction:
+- Reduces complexity
+- Improves flexibility
+- Supports scalability
+- Encourages reusable code
+- Reduces dependencies
+- Makes maintenance easier
+- Makes testing easier
+- Allows implementations to be replaced more easily
+
+In short, abstraction allows software components to depend on general concepts
+instead of specific implementation details.
+
+
+TÜRKÇE AÇIKLAMA
+---------------
+Abstraction (soyutlama), gereksiz uygulama ayrıntılarını gizleyip yalnızca önemli
+özellikleri kullanıcıya göstermektir.
+
+Örneğin:
+
+car.start()
+
+komutunu kullanan kişi, arabanın çalışması için gerçekleşen tüm mekanik ve
+elektronik işlemleri bilmek zorunda değildir. Karmaşıklık start() metodunun
+arkasında gizlenmiştir.
+
+Aynı mantık yazılım tasarımında da kullanılır.
+
+Örnek:
+
+from abc import ABC, abstractmethod
+
+class Database(ABC):
+
+    @abstractmethod
+    def save(self, data):
+        pass
+
+class MySQLDatabase(Database):
+    def save(self, data):
+        print("Saving to MySQL:", data)
+
+class PostgreSQLDatabase(Database):
+    def save(self, data):
+        print("Saving to PostgreSQL:", data)
+
+def save_user(database, user):
+    database.save(user)
+
+mysql = MySQLDatabase()
+save_user(mysql, "Ahmet")
+
+postgres = PostgreSQLDatabase()
+save_user(postgres, "Ahmet")
+
+save_user() fonksiyonu kullanılan veritabanının MySQL mi PostgreSQL mi olduğunu
+bilmek zorunda değildir. Sadece genel Database soyutlamasına güvenir.
+
+Bu yapı flexibility yani esnekliği artırır. Çünkü bir implementation başka bir
+implementation ile kolayca değiştirilebilir.
+
+Aynı zamanda scalability yani ölçeklenebilirliği artırır. Çünkü sisteme ileride
+yeni sınıflar eklenebilir.
+
+Örneğin:
+
+class MongoDatabase(Database):
+    def save(self, data):
+        print("Saving to MongoDB:", data)
+
+Bu yeni sınıf eklendiğinde programın geri kalanını tamamen değiştirmek gerekmez.
+
+Abstraction'ın avantajları:
+- Karmaşıklığı azaltır
+- Esnekliği artırır
+- Ölçeklenebilirliği artırır
+- Kodun tekrar kullanılmasını sağlar
+- Sınıflar arasındaki bağımlılığı azaltır
+- Bakımı kolaylaştırır
+- Test etmeyi kolaylaştırır
+- Farklı uygulamaların kolayca değiştirilmesini sağlar
+
+
+============================================================
+SHORT SUMMARY / KISA ÖZET
+============================================================
+
+1. Encapsulation
+English:
+Protects an object's internal data and controls access to it.
+
+Türkçe:
+Bir nesnenin iç verisini korur ve bu veriye erişimi kontrol eder.
+
+2. Abstract Data Type (ADT)
+English:
+Defines what a data structure does, not how it is implemented.
+
+Türkçe:
+Bir veri yapısının ne yaptığını tanımlar, nasıl uygulandığını değil.
+
+3. Interface / Abstract Class
+English:
+Defines a contract that classes should follow.
+
+Türkçe:
+Sınıfların uyması gereken ortak bir sözleşme tanımlar.
+
+4. Abstraction
+English:
+Hides unnecessary complexity and exposes only important operations.
+
+Türkçe:
+Gereksiz karmaşıklığı gizler ve yalnızca önemli işlemleri gösterir.
+
+
+============================================================
+KEY TERMS / ÖNEMLİ TERİMLER
+============================================================
+
+Encapsulation = Kapsülleme
+Abstraction = Soyutlama
+Access Modifier = Erişim Belirleyici
+Public = Her yerden erişilebilir
+Protected = Korunan / iç kullanım amaçlı
+Private = Özel / dış erişimi kısıtlanmış
+Abstract Data Type = Soyut Veri Tipi
+Interface = Arayüz
+Abstract Class = Soyut Sınıf
+Implementation = Uygulama / gerçekleştirim
+Inheritance = Kalıtım
+Method = Metot
+Object = Nesne
+Class = Sınıf
+Scalability = Ölçeklenebilirlik
+Flexibility = Esneklik
+Maintainability = Bakım kolaylığı
+Reusability = Yeniden kullanılabilirlik
+Loose Coupling = Düşük bağımlılık
