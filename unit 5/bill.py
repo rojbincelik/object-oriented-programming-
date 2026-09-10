@@ -11,3 +11,4 @@ def bill_splitter(total_bill,num_people):
 bill_splitter(500,5)
 bill_splitter("abc","5")
 bill_splitter(800,0)
+
